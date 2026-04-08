@@ -1,6 +1,5 @@
 <?php
-
-// 1. إعداد مسارات التخزين المؤقت لتناسب بيئة Vercel
+// إنشاء مجلدات التخزين في الذاكرة المؤقتة لـ Vercel
 $storagePath = '/tmp/storage/framework';
 $folders = ['/views', '/sessions', '/cache'];
 
@@ -10,10 +9,10 @@ foreach ($folders as $folder) {
     }
 }
 
-// 2. إخبار Laravel باستخدام المسارات الجديدة
+// إجبار Laravel على استخدام هذه المسارات
 putenv("VIEW_COMPILED_PATH=$storagePath/views");
-putenv("SESSION_DRIVER=file");
-putenv("SESSION_PATH=$storagePath/sessions");
+putenv("SESSION_DRIVER=cookie"); // تغيير الجلسات إلى كوكيز
+putenv("APP_CONFIG_CACHE=/tmp/config.php");
+putenv("APP_ROUTES_CACHE=/tmp/routes.php");
 
-// استكمال تشغيل Laravel كما هو موجود لديك سابقاً
 require __DIR__ . '/../public/index.php';
