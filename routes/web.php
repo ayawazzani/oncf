@@ -6,15 +6,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\BilletController;
 
-Route::get('/', [VoyageController::class, 'formRecherche']);
+Route::get('/', [VoyageController::class, 'accueil'])->name('home');
+
 Route::get('/rechercher', [VoyageController::class, 'formRecherche'])->name('voyage.form');
 Route::get('/rechercher/resultats', [VoyageController::class, 'resultatRecherche'])->name('voyage.search');
-
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');

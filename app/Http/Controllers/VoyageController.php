@@ -7,6 +7,14 @@ use App\Models\Voyage;
 
 class VoyageController extends Controller
 {
+    public function accueil()
+    {
+        $villesDepart = Voyage::distinct()->pluck('villeDepart');
+        $villesArrivee = Voyage::distinct()->pluck('villeDarrivee');
+
+        return view('welcome', compact('villesDepart', 'villesArrivee'));
+    }
+
     public function formRecherche()
     {
         $villesDepart = Voyage::distinct()->pluck('villeDepart');
@@ -24,8 +32,8 @@ class VoyageController extends Controller
         $villesArrivee = Voyage::distinct()->pluck('villeDarrivee');
 
         $voyages = Voyage::where('villeDepart', $vd)
-                         ->where('villeDarrivee', $va)
-                         ->get();
+            ->where('villeDarrivee', $va)
+            ->get();
 
         return view('rechercher', compact('voyages', 'villesDepart', 'villesArrivee', 'vd', 'va'));
     }

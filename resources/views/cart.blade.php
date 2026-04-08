@@ -1,178 +1,296 @@
 @extends('master_page')
 
-@section('title', 'Panier')
+@section('title', 'Mon Panier')
 
 @section('content')
 <style>
+    .cart-page-wrap {
+        background: #f5f7fb;
+        margin: -1.5rem -0.75rem 0;
+        padding: 40px 0 70px;
+        min-height: 100vh;
+    }
+
     .cart-container {
-        max-width: 900px;
+        max-width: 1180px;
         margin: 0 auto;
+        padding: 0 14px;
     }
-    .page-title {
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 30px;
+
+    .cart-hero {
+        background: linear-gradient(135deg, #0f2ea6 0%, #1a47d7 55%, #0e36b8 100%);
+        color: white;
+        border-radius: 26px;
+        padding: 34px;
+        margin-bottom: 28px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
     }
+
+    .cart-hero h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .cart-hero p {
+        margin: 0;
+        color: rgba(255,255,255,0.92);
+    }
+
     .cart-card {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-        padding: 30px;
-        margin-bottom: 25px;
+        background: white;
+        border: 1px solid #eceff5;
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 14px 34px rgba(15,23,42,0.05);
     }
-    .table-custom th {
-        font-weight: 600;
-        color: #6c757d;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
-        border-bottom: 2px solid #f0f2f5;
-        padding-bottom: 15px;
-    }
-    .table-custom td {
+
+    .cart-table {
+        margin-bottom: 0;
         vertical-align: middle;
-        padding: 15px 5px;
-        color: #2b2b2b;
-        font-weight: 500;
-        border-bottom: 1px solid #f0f2f5;
     }
-    .table-custom tr:last-child td {
-        border-bottom: none;
+
+    .cart-table thead th {
+        background: #f8faff;
+        color: #344054;
+        font-weight: 700;
+        font-size: 0.92rem;
+        padding: 16px 14px;
+        border-bottom: 1px solid #e4e7ec;
     }
-    .btn-action {
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        padding: 8px 16px;
+
+    .cart-table tbody td {
+        padding: 16px 14px;
+        border-color: #eef2f7;
     }
-    .total-row strong {
-        font-size: 1.25rem;
-        color: #1a1a1a;
+
+    .cart-voyage-code {
+        font-weight: 800;
+        color: #101828;
     }
-    .btn-primary-custom {
-        background-color: #0d6efd;
-        color: white;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 12px 24px;
-        border: none;
-        transition: all 0.3s;
-    }
-    .btn-primary-custom:hover {
-        background-color: #0b5ed7;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
-        color: white;
-    }
-    .btn-outline-custom {
-        border: 2px solid #e1e5eb;
-        color: #4a4a4a;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 10px 24px;
-        transition: all 0.3s;
-    }
-    .btn-outline-custom:hover {
-        background-color: #f7f9fc;
-        color: #1a1a1a;
-    }
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        background: #fff;
+
+    .price-badge {
+        display: inline-block;
+        background: #e8f0ff;
+        color: #1d4ed8;
+        font-weight: 800;
+        padding: 8px 12px;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-    .empty-state i {
-        font-size: 4rem;
-        color: #dee2e6;
-        margin-bottom: 20px;
-    }
-    .qte-input {
-        width: 70px;
+        min-width: 90px;
         text-align: center;
-        border-radius: 6px;
-        border: 1px solid #e1e5eb;
-        padding: 5px;
+    }
+
+    .subtotal-badge {
+        display: inline-block;
+        background: #eefcf2;
+        color: #16a34a;
+        font-weight: 800;
+        padding: 8px 12px;
+        border-radius: 12px;
+        min-width: 90px;
+        text-align: center;
+    }
+
+    .qty-input {
+        width: 90px;
+        height: 46px;
+        border-radius: 12px;
+        border: 1px solid #d0d5dd;
+        box-shadow: none;
+    }
+
+    .btn-update {
+        border: none;
+        background: #f59e0b;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .btn-remove {
+        border: none;
+        background: #dc2626;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .cart-total-box {
+        margin-top: 24px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+        border: 1px solid #eaecf0;
+        border-radius: 20px;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .cart-total-box h3 {
+        margin: 0;
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #101828;
+    }
+
+    .cart-total-amount {
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: #1d4ed8;
+    }
+
+    .cart-actions {
+        margin-top: 22px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .btn-premium-primary {
+        background: linear-gradient(135deg, #ff1f1f 0%, #df0000 100%);
+        color: #fff;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+        box-shadow: 0 14px 28px rgba(223,0,0,0.18);
+    }
+
+    .btn-premium-dark {
+        background: #101828;
+        color: #fff;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 50px 20px;
+        border: 1px dashed #d0d5dd;
+        border-radius: 20px;
+        background: #fafbfd;
+    }
+
+    .empty-cart i {
+        font-size: 42px;
+        color: #98a2b3;
+        margin-bottom: 14px;
+    }
+
+    .empty-cart h4 {
+        font-weight: 800;
+        color: #101828;
+    }
+
+    .empty-cart p {
+        color: #667085;
+        margin-bottom: 22px;
+    }
+
+    @media (max-width: 768px) {
+        .cart-page-wrap {
+            padding-top: 22px;
+        }
+
+        .cart-hero,
+        .cart-card {
+            border-radius: 18px;
+            padding: 20px;
+        }
     }
 </style>
 
-<div class="cart-container mt-4 mb-5">
-    <h2 class="page-title text-center"><i class="fa-solid fa-cart-shopping me-2 text-primary"></i> Mon Panier</h2>
+<div class="cart-page-wrap">
+    <div class="cart-container">
+        <div class="cart-hero">
+            <h1>Mon Panier</h1>
+            <p>Vérifiez vos voyages, modifiez les quantités et passez au paiement en toute simplicité.</p>
+        </div>
 
-    @if(count($cart) > 0)
         <div class="cart-card">
-            <div class="table-responsive">
-                <table class="table table-custom table-borderless">
-                    <thead>
-                        <tr>
-                            <th>Trajet</th>
-                            <th>Code</th>
-                            <th>Prix</th>
-                            <th>Quantité</th>
-                            <th>Sous-total</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php $total = 0; @endphp
-
-                        @foreach($cart as $id => $item)
-                            @php $sousTotal = $item['prix'] * $item['qte']; @endphp
-                            @php $total += $sousTotal; @endphp
-
+            @if(count($cart) > 0)
+                <div class="table-responsive">
+                    <table class="table cart-table align-middle">
+                        <thead>
                             <tr>
-                                <td>
-                                    <div class="fw-bold">{{ $item['villeDepart'] }} <i class="fa-solid fa-arrow-right mx-1 text-muted"></i> {{ $item['villeDarrivee'] }}</div>
-                                </td>
-                                <td class="text-muted">{{ $item['code_voyage'] }}</td>
-                                <td>{{ $item['prix'] }} DH</td>
-                                <td>
-                                    <form action="{{ route('cart.update') }}" method="POST" class="d-flex align-items-center gap-2 m-0">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="id_voyage" value="{{ $id }}">
-                                        <input type="number" name="qte" value="{{ $item['qte'] }}" min="1" class="qte-input">
-                                        <button type="submit" class="btn btn-warning btn-action btn-sm"><i class="fa-solid fa-rotate"></i></button>
-                                    </form>
-                                </td>
-                                <td class="fw-bold text-success">{{ $sousTotal }} DH</td>
-                                <td class="text-end">
-                                    <form action="{{ route('cart.remove') }}" method="POST" class="m-0">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="id_voyage" value="{{ $id }}">
-                                        <button type="submit" class="btn btn-outline-danger btn-action"><i class="fa-solid fa-trash"></i></button>
-                                    </form>
-                                </td>
+                                <th>Code Voyage</th>
+                                <th>Ville Départ</th>
+                                <th>Ville Arrivée</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Sous-total</th>
+                                <th>Action</th>
+                                <th>Suppression</th>
                             </tr>
-                        @endforeach
-                        <tr class="total-row">
-                            <td colspan="4" class="text-end text-muted pt-4">Total à payer :</td>
-                            <td colspan="2" class="pt-4 text-primary"><strong>{{ $total }} DH</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @php $total = 0; @endphp
+
+                            @foreach($cart as $id => $item)
+                                @php $sousTotal = $item['prix'] * $item['qte']; @endphp
+                                @php $total += $sousTotal; @endphp
+
+                                <tr>
+                                    <td class="cart-voyage-code">{{ $item['code_voyage'] }}</td>
+                                    <td>{{ $item['villeDepart'] }}</td>
+                                    <td>{{ $item['villeDarrivee'] }}</td>
+                                    <td>
+                                        <span class="price-badge">{{ $item['prix'] }} DH</span>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('cart.update') }}" method="POST" class="d-flex gap-2 align-items-center">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="id_voyage" value="{{ $id }}">
+                                            <input type="number" name="qte" value="{{ $item['qte'] }}" min="1" class="form-control qty-input">
+                                    </td>
+                                    <td>
+                                        <span class="subtotal-badge">{{ $sousTotal }} DH</span>
+                                    </td>
+                                    <td>
+                                            <button type="submit" class="btn-update">Modifier</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('cart.remove') }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id_voyage" value="{{ $id }}">
+                                            <button type="submit" class="btn-remove">Supprimer</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cart-total-box">
+                    <h3>Total général</h3>
+                    <div class="cart-total-amount">{{ $total }} DH</div>
+                </div>
+
+                <div class="cart-actions">
+                    <a href="{{ route('voyage.form') }}" class="btn-premium-dark">Continuer la recherche</a>
+                    <a href="{{ route('voyageurs.form') }}" class="btn-premium-primary">Passer au paiement</a>
+                </div>
+            @else
+                <div class="empty-cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <h4>Votre panier est vide</h4>
+                    <p>Ajoutez d’abord un voyage depuis la page de recherche pour continuer.</p>
+                    <a href="{{ route('voyage.form') }}" class="btn-premium-dark">Rechercher un voyage</a>
+                </div>
+            @endif
         </div>
-        
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            <a href="{{ route('voyage.form') }}" class="btn btn-outline-custom text-decoration-none">
-                <i class="fa-solid fa-arrow-left me-2"></i> Continuer la recherche
-            </a>
-            <a href="{{ route('voyageurs.form') }}" class="btn btn-primary-custom text-decoration-none">
-                Passer au paiement <i class="fa-solid fa-arrow-right ms-2"></i>
-            </a>
-        </div>
-    @else
-        <div class="empty-state">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <h4 class="fw-bold text-dark">Votre panier est vide</h4>
-            <p class="text-muted mb-4">Vous n'avez sélectionné aucun voyage pour le moment.</p>
-            <a href="{{ route('voyage.form') }}" class="btn btn-primary-custom text-decoration-none">
-                Rechercher un voyage
-            </a>
-        </div>
-    @endif
+    </div>
 </div>
 @endsection

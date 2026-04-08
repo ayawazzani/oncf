@@ -1,149 +1,568 @@
 @extends('master_page')
 
-@section('title', 'Bienvenue - AL BORAQ')
+@section('title', 'Accueil - ONCF')
 
 @section('content')
 <style>
-    .hero-section {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
-        border-radius: 24px;
-        padding: 80px 40px;
-        text-align: center;
-        color: white;
-        margin-top: 50px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    .premium-home {
+        background: #f5f7fb;
+        margin: -1.5rem -0.75rem 0;
+        padding-bottom: 70px;
+    }
+
+    .premium-hero {
         position: relative;
         overflow: hidden;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10), transparent 20%),
+            radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 18%),
+            linear-gradient(135deg, #0f2ea6 0%, #1a47d7 55%, #0e36b8 100%);
+        color: #fff;
+        padding: 90px 20px 150px;
     }
-    
-    .hero-section::before {
-        content: '';
+
+    .premium-hero::before {
+        content: "";
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(209,18,66,0.15) 0%, rgba(0,0,0,0) 50%);
-        pointer-events: none;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        top: -180px;
+        right: -120px;
+        filter: blur(8px);
+    }
+
+    .premium-hero::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255,43,43,0.14);
+        bottom: -120px;
+        left: -80px;
+        filter: blur(10px);
+    }
+
+    .hero-inner {
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #f6f7ff;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 26px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
     .hero-title {
+        font-size: 4.2rem;
         font-weight: 800;
-        font-size: 3.5rem;
-        margin-bottom: 20px;
-        letter-spacing: -1px;
+        line-height: 1.05;
+        letter-spacing: -2px;
+        margin-bottom: 22px;
+    }
+
+    .hero-title .accent {
+        color: #ff3636;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
-        color: #e1e5eb;
-        margin-bottom: 40px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 760px;
+        margin: 0 auto 34px;
+        font-size: 1.24rem;
+        line-height: 1.8;
+        color: rgba(255,255,255,0.92);
     }
 
-    .btn-hero {
-        background-color: #d11242;
-        color: white;
-        font-weight: 600;
-        font-size: 1.1rem;
-        padding: 16px 40px;
-        border-radius: 50px;
+    .hero-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 26px;
+    }
+
+    .btn-premium-main {
+        background: linear-gradient(135deg, #ff1f1f 0%, #df0000 100%);
+        color: #fff;
+        padding: 15px 28px;
+        border-radius: 14px;
         text-decoration: none;
-        transition: all 0.3s;
+        font-weight: 700;
         border: none;
-        display: inline-block;
-        box-shadow: 0 10px 20px rgba(209, 18, 66, 0.3);
+        box-shadow: 0 16px 30px rgba(223, 0, 0, 0.28);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .btn-hero:hover {
-        background-color: #b00f36;
-        transform: translateY(-3px);
-        box-shadow: 0 15px 25px rgba(209, 18, 66, 0.4);
-        color: white;
+    .btn-premium-main:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 18px 34px rgba(223, 0, 0, 0.34);
     }
 
-    .features-grid {
+    .btn-premium-soft {
+        background: rgba(255,255,255,0.10);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.14);
+        padding: 15px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-premium-soft:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.15);
+    }
+
+    .hero-mini-stats {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 6px;
+    }
+
+    .mini-stat {
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 16px;
+        padding: 14px 18px;
+        min-width: 170px;
+        text-align: left;
+    }
+
+    .mini-stat strong {
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: 3px;
+    }
+
+    .mini-stat span {
+        font-size: 0.92rem;
+        color: rgba(255,255,255,0.82);
+    }
+
+    .search-wrapper {
+        max-width: 1040px;
+        margin: -78px auto 0;
+        position: relative;
+        z-index: 5;
+        padding: 0 14px;
+    }
+
+    .search-card-premium {
+        background: rgba(255,255,255,0.92);
+        border: 1px solid rgba(255,255,255,0.50);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 34px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    .search-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+    }
+
+    .search-top h3 {
+        margin: 0;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: #101828;
+    }
+
+    .search-top p {
+        margin: 6px 0 0;
+        color: #667085;
+    }
+
+    .quick-badge {
+        background: #eef4ff;
+        color: #1849a9;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .search-label {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #344054;
+        margin-bottom: 9px;
+    }
+
+    .search-card-premium .form-select {
+        height: 58px;
+        border-radius: 16px;
+        border: 1px solid #d0d5dd;
+        box-shadow: none;
+        font-weight: 500;
+    }
+
+    .search-card-premium .form-select:focus {
+        border-color: #1d4ed8;
+        box-shadow: 0 0 0 4px rgba(29,78,216,0.10);
+    }
+
+    .search-btn-premium {
+        height: 58px;
+        border: none;
+        width: 100%;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #ff1f1f 0%, #df0000 100%);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 14px 28px rgba(223,0,0,0.22);
+        transition: all 0.3s ease;
+    }
+
+    .search-btn-premium:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 30px rgba(223,0,0,0.28);
+    }
+
+    .section-premium {
+        max-width: 1180px;
+        margin: 72px auto 0;
+        padding: 0 14px;
+    }
+
+    .section-heading {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+
+    .section-heading .mini {
+        color: #c0102f;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.82rem;
+        margin-bottom: 10px;
+    }
+
+    .section-heading h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #101828;
+        margin-bottom: 12px;
+    }
+
+    .section-heading p {
+        color: #667085;
+        max-width: 720px;
+        margin: 0 auto;
+        font-size: 1.08rem;
+    }
+
+    .features-premium {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        margin-top: 60px;
+        gap: 24px;
     }
 
-    .feature-card {
-        background: white;
-        padding: 30px;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-        text-align: center;
-        transition: transform 0.3s;
+    .feature-premium-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 28px 24px;
+        box-shadow: 0 12px 30px rgba(15,23,42,0.05);
+        border: 1px solid #edf1f7;
+        transition: all 0.3s ease;
+        height: 100%;
     }
 
-    .feature-card:hover {
-        transform: translateY(-5px);
+    .feature-premium-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 38px rgba(15,23,42,0.08);
     }
 
-    .feature-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #f7f9fc;
+    .feature-icon-premium {
+        width: 68px;
+        height: 68px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
-        color: #0d6efd;
-        margin: 0 auto 20px auto;
+        font-size: 26px;
+        margin-bottom: 18px;
     }
 
-    .feature-title {
-        font-weight: 700;
-        font-size: 1.1rem;
+    .bg-soft-red {
+        background: #ffe9ee;
+        color: #df002f;
+    }
+
+    .bg-soft-blue {
+        background: #e8f0ff;
+        color: #1d4ed8;
+    }
+
+    .bg-soft-green {
+        background: #e7f8ec;
+        color: #16a34a;
+    }
+
+    .feature-premium-card h4 {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #101828;
         margin-bottom: 10px;
-        color: #1a1a1a;
     }
 
-    .feature-text {
-        font-size: 0.9rem;
-        color: #6c757d;
+    .feature-premium-card p {
+        color: #667085;
+        line-height: 1.75;
+        margin-bottom: 0;
     }
-    
-    @media (max-width: 768px) {
-        .features-grid {
+
+    .bottom-cta {
+        margin-top: 34px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+        border: 1px solid #eaecf0;
+        border-radius: 24px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        box-shadow: 0 10px 25px rgba(15,23,42,0.04);
+    }
+
+    .bottom-cta h3 {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #101828;
+        margin-bottom: 8px;
+    }
+
+    .bottom-cta p {
+        margin-bottom: 0;
+        color: #667085;
+    }
+
+    .bottom-cta .btn-premium-main {
+        white-space: nowrap;
+    }
+
+    @media (max-width: 991px) {
+        .hero-title {
+            font-size: 2.9rem;
+            letter-spacing: -1px;
+        }
+
+        .features-premium {
             grid-template-columns: 1fr;
         }
+
+        .bottom-cta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .premium-home {
+            margin: -1.5rem -0.75rem 0;
+        }
+
+        .premium-hero {
+            padding: 70px 16px 120px;
+        }
+
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.35rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .search-card-premium {
+            padding: 22px;
+            border-radius: 22px;
+        }
+
+        .search-top h3 {
+            font-size: 1.5rem;
+        }
+
+        .section-heading h2 {
+            font-size: 2rem;
+        }
+
+        .mini-stat {
+            width: 100%;
         }
     }
 </style>
 
-<div class="container pb-5">
-    <div class="hero-section">
-        <div class="fs-1 mb-3" style="color: #d11242;"><i class="fa-solid fa-train-subway"></i></div>
-        <h1 class="hero-title">Voyagez avec AL BORAQ</h1>
-        <p class="hero-subtitle">Réservez vos billets en ligne rapidement et profitez de nos trains à grande vitesse pour traverser le Maroc en un temps record.</p>
-        <a href="{{ route('voyage.form') }}" class="btn-hero">
-            Rechercher un billet <i class="fa-solid fa-arrow-right ms-2"></i>
-        </a>
+<div class="premium-home">
+    <div class="premium-hero">
+        <div class="hero-inner">
+            <div class="hero-pill">
+                <i class="fa-solid fa-train-subway"></i>
+                AL BORAQ · Train à Grande Vitesse
+            </div>
+
+            <h1 class="hero-title">
+                Voyagez avec <span class="accent">AL BORAQ</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Réservez vos billets de train en quelques clics avec une expérience rapide,
+                élégante et sécurisée pour voyager partout au Maroc.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ route('voyage.form') }}" class="btn-premium-main">
+                    Rechercher un billet
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a href="{{ route('cart.show') }}" class="btn-premium-soft">
+                    Voir mon panier
+                </a>
+            </div>
+
+            <div class="hero-mini-stats">
+                <div class="mini-stat">
+                    <strong>320 km/h</strong>
+                    <span>Grande vitesse</span>
+                </div>
+                <div class="mini-stat">
+                    <strong>100%</strong>
+                    <span>Paiement sécurisé</span>
+                </div>
+                <div class="mini-stat">
+                    <strong>24/7</strong>
+                    <span>Réservation en ligne</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fa-solid fa-bolt text-warning"></i></div>
-            <h3 class="feature-title">Ultra Rapide</h3>
-            <p class="feature-text">Gagnez du temps précieux. Voyagez entre Tanger et Casablanca en seulement 2h10.</p>
+    <div class="search-wrapper">
+        <div class="search-card-premium">
+            <div class="search-top">
+                <div>
+                    <h3>Rechercher un billet</h3>
+                    <p>Trouvez rapidement votre trajet selon votre ville de départ et d’arrivée.</p>
+                </div>
+
+                <div class="quick-badge">
+                    Recherche instantanée
+                </div>
+            </div>
+
+            <form action="{{ route('voyage.search') }}" method="GET" class="row g-3">
+                <div class="col-md-5">
+                    <label class="search-label">Ville de départ</label>
+                    <select name="ville_depart" class="form-select" required>
+                        <option value="">Choisir une ville</option>
+                        @foreach ($villesDepart as $ville)
+                            <option value="{{ $ville }}">{{ $ville }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-5">
+                    <label class="search-label">Ville d’arrivée</label>
+                    <select name="ville_arrivee" class="form-select" required>
+                        <option value="">Choisir une ville</option>
+                        @foreach ($villesArrivee as $ville)
+                            <option value="{{ $ville }}">{{ $ville }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="search-btn-premium">Rechercher</button>
+                </div>
+            </form>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fa-solid fa-couch text-success"></i></div>
-            <h3 class="feature-title">Confort Absolu</h3>
-            <p class="feature-text">Des sièges spacieux, une climatisation parfaite et un service à bord de qualité.</p>
+    </div>
+
+    <div class="section-premium">
+        <div class="section-heading">
+            <div class="mini">Pourquoi choisir ONCF</div>
+            <h2>Une expérience moderne, rapide et confortable</h2>
+            <p>
+                Profitez d’un service premium avec des trajets rapides,
+                un confort de haut niveau et une réservation simple à tout moment.
+            </p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fa-solid fa-shield-halved text-primary"></i></div>
-            <h3 class="feature-title">Paiement Sécurisé</h3>
-            <p class="feature-text">Vos transactions sont 100% sécurisées grâce à notre système de paiement certifié.</p>
+
+        <div class="features-premium">
+            <div class="feature-premium-card">
+                <div class="feature-icon-premium bg-soft-red">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h4>Rapidité</h4>
+                <p>
+                    Voyagez à grande vitesse entre les principales villes du Maroc
+                    avec une expérience fluide et optimisée.
+                </p>
+            </div>
+
+            <div class="feature-premium-card">
+                <div class="feature-icon-premium bg-soft-blue">
+                    <i class="fa-solid fa-train"></i>
+                </div>
+                <h4>Confort premium</h4>
+                <p>
+                    Profitez de sièges confortables, d’un espace agréable
+                    et d’un voyage pensé pour votre bien-être.
+                </p>
+            </div>
+
+            <div class="feature-premium-card">
+                <div class="feature-icon-premium bg-soft-green">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4>Sécurité</h4>
+                <p>
+                    Réservez en toute confiance grâce à un système fiable,
+                    sécurisé et simple à utiliser.
+                </p>
+            </div>
+        </div>
+
+        <div class="bottom-cta">
+            <div>
+                <h3>Prêt pour votre prochain trajet ?</h3>
+                <p>
+                    Recherchez votre billet, ajoutez-le au panier et finalisez votre réservation en quelques minutes.
+                </p>
+            </div>
+
+            <a href="{{ route('voyage.form') }}" class="btn-premium-main">
+                Commencer maintenant
+            </a>
         </div>
     </div>
 </div>
