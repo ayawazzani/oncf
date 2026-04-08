@@ -80,6 +80,16 @@
             "php-http/discovery": true
         }
     },
+    
+  "scripts": {
+    "vercel": [
+      "php artisan config:clear",
+      "php artisan route:clear",
+      "php artisan view:clear"
+    ]
+  },
     "minimum-stability": "stable",
     "prefer-stable": true
+    
 }
+
