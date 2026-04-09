@@ -1,5 +1,5 @@
 <?php
-// إنشاء مجلدات التخزين في الذاكرة المؤقتة لـ Vercel
+
 $storagePath = '/tmp/storage/framework';
 $folders = ['/views', '/sessions', '/cache'];
 
@@ -9,10 +9,7 @@ foreach ($folders as $folder) {
     }
 }
 
-// إجبار Laravel على استخدام هذه المسارات
 putenv("VIEW_COMPILED_PATH=$storagePath/views");
-putenv("SESSION_DRIVER=cookie"); // تغيير الجلسات إلى كوكيز
-putenv("APP_CONFIG_CACHE=/tmp/config.php");
-putenv("APP_ROUTES_CACHE=/tmp/routes.php");
+putenv("SESSION_DRIVER=cookie");
 
 require __DIR__ . '/../public/index.php';
