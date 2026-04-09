@@ -270,7 +270,7 @@
                 Trouvez rapidement le bon billet et ajoutez-le directement à votre panier.
             </div>
 
-            <form action="{{ route('voyage.search') }}" method="GET" class="row g-3">
+            <form action="/rechercher/resultats" method="GET" class="row g-3">
                 <div class="col-md-5">
                     <label class="search-label">Ville de départ</label>
                     <select name="ville_depart" class="form-select" required>
