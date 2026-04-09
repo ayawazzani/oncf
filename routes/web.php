@@ -21,3 +21,8 @@ Route::post('/voyageurs', [PaiementController::class, 'storeVoyageurs'])->name('
 Route::get('/paiement/process', [PaiementController::class, 'processPaiement'])->name('paiement.process');
 
 Route::get('/billets', [BilletController::class, 'show'])->name('billets.show');
+
+use App\Http\Controllers\Api\VoyageApiController;
+
+Route::get('/voyages/search-json', [VoyageApiController::class, 'search'])
+    ->name('voyages.search.json');
